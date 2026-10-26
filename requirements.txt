@@ -10,3 +10,4 @@ flask_sqlalchemy
 SQLAlchemy
 gunicorn
 psycopg
+email_validator
