@@ -12,3 +12,4 @@ gunicorn
 psycopg
 email_validator
 bleach
+python-dotenv
