@@ -15,6 +15,7 @@ from typing import List
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from decorators import admin_only
+from dotenv import load_dotenv
 import os
 
 
@@ -41,6 +42,7 @@ def gravatar_url(email, size=100, rating='g', default='retro', force_default=Fal
     })
     return f"https://www.gravatar.com/avatar/{hash_value}?{query_params}"
 
+load_dotenv()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('APP_SECRET_KEY')
 app.jinja_env.filters['gravatar'] = gravatar_url
@@ -249,4 +251,4 @@ def contact():
     return render_template("contact.html")
 
 if __name__ == "__main__":
-    app.run(debug=os.environ.get('DEBUG'))
+    app.run(debug=os.environ.get('DEBUG').lower() == 'true')

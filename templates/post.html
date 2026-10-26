@@ -47,7 +47,7 @@
             {% for comment in comments %}
               <li>
                 <div class="commenterImage">
-                  <img src="{{ gravatar_url_func(current_user.name) }}" />
+                  <img src="{{ gravatar_url_func(comment.author.name) }}" />
                 </div>
                 <div class="commentText">
                   <span class="date sub-text">{{comment.author.name}}</span>
