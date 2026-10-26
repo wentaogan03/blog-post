@@ -11,3 +11,4 @@ SQLAlchemy
 gunicorn
 psycopg
 email_validator
+bleach
