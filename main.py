@@ -15,6 +15,7 @@ from typing import List
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from decorators import admin_only
+import os
 
 
 '''
@@ -41,7 +42,7 @@ def gravatar_url(email, size=100, rating='g', default='retro', force_default=Fal
     return f"https://www.gravatar.com/avatar/{hash_value}?{query_params}"
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get('APP_SECRET_KEY')
 app.jinja_env.filters['gravatar'] = gravatar_url
 ckeditor = CKEditor(app)
 Bootstrap5(app)
@@ -57,7 +58,7 @@ def load_user(user_id):
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI', 'sqlite:///posts.db')
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -165,7 +166,6 @@ def logout():
 def get_all_posts():
     result = db.session.execute(db.select(BlogPost))
     posts = result.scalars().all()
-    print(posts)
     return render_template("index.html", all_posts=posts)
 
 # TODO: Allow logged-in users to comment on posts
@@ -249,4 +249,4 @@ def contact():
     return render_template("contact.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.environ.get('DEBUG'))

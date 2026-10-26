@@ -8,3 +8,5 @@ Werkzeug
 Flask
 flask_sqlalchemy
 SQLAlchemy
+gunicorn
+psycopg-binary

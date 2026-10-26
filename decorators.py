@@ -6,7 +6,6 @@ def admin_only(function):
 
     @wraps(function)
     def wrapper_function(*args, **kwargs):
-        print(current_user.id)
         if current_user.is_authenticated and current_user.id == 1:
             return function(*args, **kwargs)
         return abort(403)
